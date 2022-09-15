@@ -10,6 +10,7 @@ public:
     ~Player();
 
     void input(float timeStep, const uint8_t *state, std::vector<SDL_Rect*> cbox_vec);
+    void move(int velY, int velX, float timeStep);
     void render(SDL_Renderer *rend);
 
     SDL_Rect* get_cbox_ref();

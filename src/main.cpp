@@ -6,8 +6,8 @@
 #include "timer.hpp"
 #include "object.hpp"
 
-const int WIN_HEIGHT = 480;
-const int WIN_WIDTH = 640;
+const int WIN_HEIGHT = 1080;
+const int WIN_WIDTH = 1920;
 
 int game_loop(SDL_Renderer *rend);
 

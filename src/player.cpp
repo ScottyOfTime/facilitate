@@ -5,7 +5,9 @@
 
 #define PLAYER_WIDTH 20
 #define PLAYER_HEIGHT 28
-#define PLAYER_VELOCITY 200
+#define PLAYER_SPEED 200
+
+const float SIN_45 = 0.707106;
 
 Player::Player(float px, float py)
 {
@@ -29,7 +31,8 @@ void Player::input(float timeStep, const uint8_t *state, std::vector<SDL_Rect*> 
 {
     //printf("pos x: %d, pos y: %d\n", x, y);
     float n_y, n_x;
-    float n = timeStep * PLAYER_VELOCITY;
+    float n = timeStep * PLAYER_SPEED;
+    int velY = 0, velX = 0;
     /* Updated collision box that is tested against */
     SDL_Rect r;
     r.w = PLAYER_WIDTH;
@@ -38,44 +41,38 @@ void Player::input(float timeStep, const uint8_t *state, std::vector<SDL_Rect*> 
     r.y = (int)y;
 
     if (state[SDL_SCANCODE_W]) {
-        n_y = y - n;
-        r.y = (int)n_y;
-
-        if (!check_n_collisions(&r, cbox_vec.data(), cbox_vec.size())) {
-            y = n_y;
-            cbox.y = (int)y;
-            rect.y = (int)y;
-        }
+        velY -= PLAYER_SPEED;
     }
     if (state[SDL_SCANCODE_S]) {
-        n_y = y + n;
-        r.y = (int)n_y;
-
-        if (!check_n_collisions(&r, cbox_vec.data(), cbox_vec.size())) {
-            y = n_y;
-            cbox.y = (int)y;
-            rect.y = (int)y;
-        }
+        velY += PLAYER_SPEED;
     }
     if (state[SDL_SCANCODE_A]) {
-        n_x = x - n;
-        r.x = (int)n_x;
-
-        if (!check_n_collisions(&r, cbox_vec.data(), cbox_vec.size())) {
-            x = n_x;
-            cbox.x = (int)x;
-            rect.x = (int)x;
-        }
+        velX -= PLAYER_SPEED;
     }
     if (state[SDL_SCANCODE_D]) {
-        n_x = x + n;
-        r.x = (int)n_x;
+        velX += PLAYER_SPEED;
+    }
+    move(velX, velY, timeStep);
+}
 
-        if (!check_n_collisions(&r, cbox_vec.data(), cbox_vec.size())) {
-            x = n_x;
-            cbox.x = (int)x;
-            rect.x = (int)x;
-        }
+void Player::move(int velX, int velY, float timeStep)
+{
+    if (velX && velY) {
+        y += (SIN_45 * velY) * timeStep;
+        cbox.y = (int)y;
+        rect.y = (int)y;
+
+        x += (SIN_45 * velX) * timeStep;
+        cbox.x = (int)x;
+        rect.x = (int)x;
+    } else {
+        y += velY * timeStep;
+        cbox.y = (int)y;
+        rect.y = (int)y;
+
+        x += velX * timeStep;
+        cbox.x = (int)x;
+        rect.x = (int)x;
     }
 }
 
