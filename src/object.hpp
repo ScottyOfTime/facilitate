@@ -8,7 +8,7 @@ public:
     Object(float px, float py, int w, int h);
     ~Object();
 
-    void render(SDL_Renderer *rend);
+    void render(SDL_Renderer *rend, SDL_Rect *cam);
 
     SDL_Rect* get_cbox_ref();
 

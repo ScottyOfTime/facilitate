@@ -3,8 +3,6 @@
 #include "player.hpp"
 #include "collision.h"
 
-#define PLAYER_WIDTH 20
-#define PLAYER_HEIGHT 28
 #define PLAYER_SPEED 200
 
 const float SIN_45 = 0.707106;
@@ -64,29 +62,55 @@ void Player::move(int velX, int velY, float timeStep, std::vector<SDL_Rect*> cbo
         n_y = y + ((float)velY * timeStep);
     }
 
-    // Collision handling
-    SDL_Rect r;
-    r.w = PLAYER_WIDTH;
-    r.h = PLAYER_HEIGHT;
-    r.x = (int)n_x;
-    r.y = (int)n_y;
+    /* COLLISION HANDLING
+     *
+     * Two collisions checks are done to seperate axes and allow sliding along objects.
+     * I don't know if this is the most efficient way but it works.
+     * !!! PLEASE REVISIT THIS !!!
+     */
+    SDL_Rect r1;
+    r1.w = PLAYER_WIDTH;
+    r1.h = PLAYER_HEIGHT;
+    r1.x = (int)n_x;
+    r1.y = y;
 
-    if (!check_n_collisions(&r, cbox_vec.data(), cbox_vec.size())) {
+    SDL_Rect r2;
+    r2.w = r1.w;
+    r2.h = r1.h;
+    r2.x = x;
+    r2.y = (int)n_y;
+
+    if (!check_n_collisions(&r1, cbox_vec.data(), cbox_vec.size())) {
         x = n_x;
         cbox.x = (int)x;
         rect.x = (int)x;
-
+    }
+    if (!check_n_collisions(&r2, cbox_vec.data(), cbox_vec.size())) {
         y = n_y;
         cbox.y = (int)y;
         rect.y = (int)y;
     }
 }
 
-void Player::render(SDL_Renderer *rend)
+void Player::render(SDL_Renderer *rend, SDL_Rect *cam)
 {
+    SDL_Rect rr;
+    rr.w = PLAYER_WIDTH;
+    rr.h = PLAYER_HEIGHT;
+    rr.x = x - cam->x;
+    rr.y = y - cam->y;
+
     SDL_SetRenderDrawColor(rend, 255, 255, 255, 255);
-    SDL_RenderFillRect(rend, &rect);
-    SDL_RenderDrawRect(rend, &rect);
+    SDL_RenderFillRect(rend, &rr);
+    SDL_RenderDrawRect(rend, &rr);
+}
+
+std::array<float, 2> Player::getPos() 
+{
+    float posX = x;
+    float posY = y;
+    std::array<float, 2> a = {posX, posY};
+    return a;
 }
 
 SDL_Rect* Player::get_cbox_ref()

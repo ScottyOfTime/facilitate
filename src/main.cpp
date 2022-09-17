@@ -6,8 +6,8 @@
 #include "timer.hpp"
 #include "object.hpp"
 
-const int WIN_HEIGHT = 1080;
-const int WIN_WIDTH = 1920;
+const int WIN_HEIGHT = 480;
+const int WIN_WIDTH = 640;
 
 int game_loop(SDL_Renderer *rend);
 
@@ -48,6 +48,13 @@ int main(int argc, char *argv[])
 
 int game_loop(SDL_Renderer *rend)
 {
+    // Make the camera
+    SDL_Rect cam;
+    cam.x = 0;
+    cam.y = 0;
+    cam.w = WIN_WIDTH;
+    cam.h = WIN_HEIGHT;
+
     Player *p = new Player(64, 64);
     Timer t = Timer();
     float timeStep;
@@ -71,13 +78,15 @@ int game_loop(SDL_Renderer *rend)
         timeStep = (float)t.timer_get_ticks() / 1000.f;
 
         p->input(timeStep, state, collisionVec);
+        cam.x = (p->getPos()[0] + PLAYER_WIDTH / 2) - WIN_WIDTH / 2;
+        cam.y = (p->getPos()[1] + PLAYER_HEIGHT / 2) - WIN_HEIGHT / 2;
 
         t.start_timer();
 
         SDL_SetRenderDrawColor(rend, 62, 73, 92, 255);
         SDL_RenderClear(rend);
-        p->render(rend);
-        box1.render(rend);
+        p->render(rend, &cam);
+        box1.render(rend, &cam);
         SDL_RenderPresent(rend);
         SDL_Delay(1);
     }

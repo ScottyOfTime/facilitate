@@ -18,11 +18,17 @@ Object::Object(float px, float py, int w, int h)
 
 Object::~Object() {}
 
-void Object::render(SDL_Renderer *rend)
+void Object::render(SDL_Renderer *rend, SDL_Rect *cam)
 {
+    SDL_Rect rr;
+    rr.x = rect.x - cam->x;
+    rr.y = rect.y - cam->y;
+    rr.w = rect.w;
+    rr.h = rect.h;
+
     SDL_SetRenderDrawColor(rend, 255, 0, 0, 255);
-    SDL_RenderFillRect(rend, &rect);
-    SDL_RenderDrawRect(rend, &rect);
+    SDL_RenderFillRect(rend, &rr);
+    SDL_RenderDrawRect(rend, &rr);
 }
 
 SDL_Rect* Object::get_cbox_ref()
