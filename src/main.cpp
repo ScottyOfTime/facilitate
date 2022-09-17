@@ -85,8 +85,8 @@ int game_loop(SDL_Renderer *rend)
 
         SDL_SetRenderDrawColor(rend, 62, 73, 92, 255);
         SDL_RenderClear(rend);
-        p->render(rend, &cam);
         box1.render(rend, &cam);
+        p->render(rend, &cam);
         SDL_RenderPresent(rend);
         SDL_Delay(1);
     }
