@@ -30,8 +30,6 @@ Player::~Player() {};
 void Player::input(float timeStep, const uint8_t *state, std::vector<SDL_Rect*> cbox_vec)
 {
     //printf("pos x: %d, pos y: %d\n", x, y);
-    float n_y, n_x;
-    float n = timeStep * PLAYER_SPEED;
     int velY = 0, velX = 0;
     /* Updated collision box that is tested against */
     SDL_Rect r;
@@ -52,27 +50,35 @@ void Player::input(float timeStep, const uint8_t *state, std::vector<SDL_Rect*> 
     if (state[SDL_SCANCODE_D]) {
         velX += PLAYER_SPEED;
     }
-    move(velX, velY, timeStep);
+    move(velX, velY, timeStep, cbox_vec);
 }
 
-void Player::move(int velX, int velY, float timeStep)
+void Player::move(int velX, int velY, float timeStep, std::vector<SDL_Rect*> cbox_vec)
 {
+    float n_x, n_y;
     if (velX && velY) {
-        y += (SIN_45 * velY) * timeStep;
-        cbox.y = (int)y;
-        rect.y = (int)y;
-
-        x += (SIN_45 * velX) * timeStep;
-        cbox.x = (int)x;
-        rect.x = (int)x;
+        n_x = x + ((SIN_45 * (float)velX) * timeStep);
+        n_y = y + ((SIN_45 * (float)velY) * timeStep);
     } else {
-        y += velY * timeStep;
-        cbox.y = (int)y;
-        rect.y = (int)y;
+        n_x = x + ((float)velX * timeStep);
+        n_y = y + ((float)velY * timeStep);
+    }
 
-        x += velX * timeStep;
+    // Collision handling
+    SDL_Rect r;
+    r.w = PLAYER_WIDTH;
+    r.h = PLAYER_HEIGHT;
+    r.x = (int)n_x;
+    r.y = (int)n_y;
+
+    if (!check_n_collisions(&r, cbox_vec.data(), cbox_vec.size())) {
+        x = n_x;
         cbox.x = (int)x;
         rect.x = (int)x;
+
+        y = n_y;
+        cbox.y = (int)y;
+        rect.y = (int)y;
     }
 }
 
