@@ -5,6 +5,7 @@
 #include "player.hpp"
 #include "timer.hpp"
 #include "object.hpp"
+#include "ecs/coordinator.hpp"
 
 const int WIN_HEIGHT = 480;
 const int WIN_WIDTH = 640;
