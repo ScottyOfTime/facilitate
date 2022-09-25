@@ -10,8 +10,16 @@ add_executable(facilitate
     texture.cpp
 )
 
+target_sources(facilitate PRIVATE
+    ecs/systems/physics_system.cpp
+    ecs/systems/render_system.cpp
+    ecs/systems/player_control_system.cpp
+    ecs/components/transform.hpp
+)
+
 target_include_directories(facilitate PRIVATE 
     .
+
 )
 
 target_include_directories(facilitate PUBLIC

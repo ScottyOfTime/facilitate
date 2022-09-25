@@ -64,9 +64,15 @@ public:
         return componentManager->get_component<T>(ent);
     }
 
+    template<typename T>
+    ComponentID get_component_type()
+    {
+        return componentManager->get_component_type<T>();
+    }
+
     /* System methods */
     template<typename T>
-    std::shared_ptr<T> register_system(Signature signature)
+    std::shared_ptr<T> register_system()
     {
         return systemManager->register_system<T>();
     }

@@ -20,8 +20,8 @@ class ComponentPool : public IComponentPool
 public:
     void insert_data(Entity ent, T component)
     {
-        assert(entityIndices[ent] == entityIndices[size] && 
-                "Component added to same entity more than once.");
+        /*assert(entityIndices[ent] == entityIndices[size] && 
+                "Component added to same entity more than once.");*/
 
         size_t index = size;
         entityIndices[ent] = index;
@@ -32,8 +32,8 @@ public:
 
     void remove_data(Entity ent)
     {
-        assert(entityIndices[ent] != entityIndices[size] &&
-            "Removing non-existent component.");
+        /*assert(entityIndices[ent] != entityIndices[size] &&
+            "Removing non-existent component.");*/
 
         size_t indexOfRemovedEntity = entityIndices[ent];
         size_t indexOfLastElement = size - 1;
@@ -43,16 +43,16 @@ public:
         entityIndices[entityOfLastElement] = indexOfRemovedEntity;
         entityArray[indexOfRemovedEntity] = entityOfLastElement;
 
-        entityIndices[ent] = NULL;
-        entityArray[indexOfLastElement] = NULL;
+        entityIndices[ent] = 0;
+        entityArray[indexOfLastElement] = 0;
 
         size--;
     }
 
     T& get_data(Entity ent)
     {
-        assert(entityIndices[ent] != entityIndices[size] && 
-                "Retrieving non-existent component");
+        /*assert(entityIndices[ent] != entityIndices[size] && 
+                "Retrieving non-existent component");*/
 
         return componentArray[entityIndices[ent]];
     }

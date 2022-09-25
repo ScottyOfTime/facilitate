@@ -5,6 +5,8 @@
 #include <unordered_map>
 #include "ecs/types.hpp"
 
+#pragma once
+
 class System
 {
 public:

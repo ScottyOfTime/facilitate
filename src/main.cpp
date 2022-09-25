@@ -6,11 +6,19 @@
 #include "timer.hpp"
 #include "object.hpp"
 #include "ecs/coordinator.hpp"
+#include "ecs/components/renderable.hpp"
+#include "ecs/components/transform.hpp"
+#include "ecs/components/velocity.hpp"
+#include "ecs/systems/physics_system.hpp"
+#include "ecs/systems/render_system.hpp"
+#include "ecs/systems/player_control_system.hpp"
 
 const int WIN_HEIGHT = 480;
 const int WIN_WIDTH = 640;
 
 int game_loop(SDL_Renderer *rend);
+
+Coordinator coordinator;
 
 int main(int argc, char *argv[])
 {
@@ -65,6 +73,53 @@ int game_loop(SDL_Renderer *rend)
     Object box1 = Object(100, 100, 128, 128);
     collisionVec.push_back(box1.get_cbox_ref());
 
+    /* ECS STUFF */
+    coordinator.init();
+
+    coordinator.register_component<Transform>();
+    coordinator.register_component<Velocity>();
+    coordinator.register_component<Renderable>();
+
+    auto physicsSystem = coordinator.register_system<PhysicsSystem>();
+
+    Signature signature;
+    signature.set(coordinator.get_component_type<Transform>());
+    signature.set(coordinator.get_component_type<Velocity>());
+    coordinator.set_system_signature<PhysicsSystem>(signature);
+
+    auto renderSystem = coordinator.register_system<RenderSystem>();
+    renderSystem->init(rend);
+    signature.reset();
+    signature.set(coordinator.get_component_type<Transform>());
+    signature.set(coordinator.get_component_type<Renderable>());
+    coordinator.set_system_signature<RenderSystem>(signature);
+
+    auto playerSystem = coordinator.register_system<PlayerControlSystem>();
+    playerSystem->init(state);
+    signature.reset();
+    signature.set(coordinator.get_component_type<Transform>());
+    signature.set(coordinator.get_component_type<Renderable>());
+    signature.set(coordinator.get_component_type<Velocity>());
+    coordinator.set_system_signature<PlayerControlSystem>(signature);
+
+    auto player = coordinator.create_entity();
+    coordinator.add_component(player, Transform{
+            .position = Vec2{60, 60},
+            .scale = Vec2{1, 1}
+            });
+    coordinator.add_component(player, Velocity{0, 0});
+    SDL_Rect r;
+    r.w = 20;
+    r.h = 20;
+    r.x = 60;
+    r.y = 60;
+    coordinator.add_component(player, Renderable{
+            .rect = r});
+
+    /* END ECS STUFF */
+
+    std::vector<Entity> entities(MAX_ENTITIES);
+
     SDL_Event e;
     bool quit = false;
     
@@ -78,17 +133,21 @@ int game_loop(SDL_Renderer *rend)
         }
         timeStep = (float)t.timer_get_ticks() / 1000.f;
 
-        p->input(timeStep, state, collisionVec);
+        /*p->input(timeStep, state, collisionVec);
         cam.x = (p->getPos()[0] + PLAYER_WIDTH / 2) - WIN_WIDTH / 2;
-        cam.y = (p->getPos()[1] + PLAYER_HEIGHT / 2) - WIN_HEIGHT / 2;
+        cam.y = (p->getPos()[1] + PLAYER_HEIGHT / 2) - WIN_HEIGHT / 2;*/
+        playerSystem->update(timeStep);
+        physicsSystem->update(timeStep);
 
         t.start_timer();
 
-        SDL_SetRenderDrawColor(rend, 62, 73, 92, 255);
+        renderSystem->update(timeStep);
+
+        /*SDL_SetRenderDrawColor(rend, 62, 73, 92, 255);
         SDL_RenderClear(rend);
         box1.render(rend, &cam);
         p->render(rend, &cam);
-        SDL_RenderPresent(rend);
+        SDL_RenderPresent(rend);*/
         SDL_Delay(1);
     }
     return 0;
