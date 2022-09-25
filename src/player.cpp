@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 #include "player.hpp"
-#include "collision.h"
+//#include "collision.hpp"
 
 #define PLAYER_SPEED 200
 

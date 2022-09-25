@@ -7,6 +7,8 @@
 #include <cassert>
 #include <ecs/types.hpp>
 
+#pragma once
+
 class IComponentPool
 {
 public:

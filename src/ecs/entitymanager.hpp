@@ -4,6 +4,8 @@
 #include <cassert>
 #include "ecs/types.hpp"
 
+#pragma once
+
 class EntityManager
 {
 public:

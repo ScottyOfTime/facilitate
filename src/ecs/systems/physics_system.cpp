@@ -1,4 +1,3 @@
-
 #include "ecs/systems/physics_system.hpp"
 #include "ecs/components/transform.hpp"
 #include "ecs/components/velocity.hpp"
@@ -13,10 +12,10 @@ void PhysicsSystem::update(float dt)
         auto& transform = coordinator.get_component<Transform>(ent);
         auto& velocity = coordinator.get_component<Velocity>(ent);
 
-        printf("Physics system: Entity %d at (%f, %f); dt = %f\n", ent, transform.position.x,
-                transform.position.y, dt);
-        printf("Physics system: Entity %d velocity at (%f, %f)\n", ent, velocity.vel.x,
-                velocity.vel.y);
+        //printf("Physics system: Entity %d at (%f, %f); dt = %f\n", ent, transform.position.x,
+                //transform.position.y, dt);
+        //printf("Physics system: Entity %d velocity at (%f, %f)\n", ent, velocity.vel.x,
+                //velocity.vel.y);
 
         transform.position.x += velocity.vel.x * dt;
         transform.position.y += velocity.vel.y * dt;

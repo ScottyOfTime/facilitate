@@ -5,6 +5,8 @@
 #include "ecs/componentpool.hpp"
 #include "ecs/types.hpp"
 
+#pragma once
+
 class ComponentManager
 {
 public:

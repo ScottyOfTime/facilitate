@@ -4,6 +4,8 @@
 #include "ecs/componentmanager.hpp"
 #include "ecs/system.hpp"
 
+#pragma once
+
 class Coordinator
 {
 public:

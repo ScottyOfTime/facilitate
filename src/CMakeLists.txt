@@ -4,7 +4,6 @@ find_package(SDL2_image REQUIRED)
 
 add_executable(facilitate
     main.cpp
-    player.cpp
     timer.cpp
     object.cpp
     texture.cpp
@@ -14,7 +13,7 @@ target_sources(facilitate PRIVATE
     ecs/systems/physics_system.cpp
     ecs/systems/render_system.cpp
     ecs/systems/player_control_system.cpp
-    ecs/components/transform.hpp
+    ecs/systems/collision_system.cpp
 )
 
 target_include_directories(facilitate PRIVATE 
