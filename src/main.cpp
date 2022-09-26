@@ -96,7 +96,7 @@ int game_loop(SDL_Renderer *rend)
 
     /* RENDER SYSTEM SETUP */
     auto renderSystem = coordinator.register_system<RenderSystem>();
-    renderSystem->init(rend);
+    renderSystem->init(rend, &cam);
     signature.reset();
     signature.set(coordinator.get_component_type<Transform>());
     signature.set(coordinator.get_component_type<Renderable>());
@@ -160,9 +160,10 @@ int game_loop(SDL_Renderer *rend)
         }
         timeStep = (float)t.timer_get_ticks() / 1000.f;
 
-        /*p->input(timeStep, state, collisionVec);
-        cam.x = (p->getPos()[0] + PLAYER_WIDTH / 2) - WIN_WIDTH / 2;
-        cam.y = (p->getPos()[1] + PLAYER_HEIGHT / 2) - WIN_HEIGHT / 2;*/
+        cam.x = (coordinator.get_component<Transform>(player).position.x
+                + 20 / 2) - WIN_WIDTH / 2;
+        cam.y = (coordinator.get_component<Transform>(player).position.y 
+                + 20 / 2) - WIN_HEIGHT / 2;
         playerSystem->update(timeStep);
         collisionSystem->update(timeStep);
         physicsSystem->update(timeStep);

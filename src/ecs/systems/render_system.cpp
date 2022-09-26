@@ -5,9 +5,10 @@
 
 extern Coordinator coordinator;
 
-void RenderSystem::init(SDL_Renderer *renderer)
+void RenderSystem::init(SDL_Renderer *renderer, SDL_Rect *camera)
 {
     rend = renderer;
+    cam = camera;
 }
 
 void RenderSystem::update(float dt)
@@ -24,8 +25,8 @@ void RenderSystem::update(float dt)
         SDL_Rect rr;
         rr.w = renderable.rect.w;
         rr.h = renderable.rect.h;
-        rr.x = (int)transform.position.x;
-        rr.y = (int)transform.position.y;
+        rr.x = (int)transform.position.x - cam->x;
+        rr.y = (int)transform.position.y - cam->y;
         
         SDL_SetRenderDrawColor(rend, 255, 255, 255, 255);
         SDL_RenderFillRect(rend, &rr);
