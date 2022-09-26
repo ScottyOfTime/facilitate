@@ -17,8 +17,8 @@ void PhysicsSystem::update(float dt)
         //printf("Physics system: Entity %d velocity at (%f, %f)\n", ent, velocity.vel.x,
                 //velocity.vel.y);
 
-        transform.position.x += velocity.vel.x * dt;
-        transform.position.y += velocity.vel.y * dt;
+        transform.position.x += velocity.x * dt;
+        transform.position.y += velocity.y * dt;
         //printf("Changed entity %d, position to (%d, %d)\n", ent, transform.position.x,
                 //transform.position.y);
     }

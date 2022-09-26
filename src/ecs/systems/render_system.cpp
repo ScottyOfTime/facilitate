@@ -25,8 +25,8 @@ void RenderSystem::update(float dt)
         SDL_Rect rr;
         rr.w = renderable.rect.w;
         rr.h = renderable.rect.h;
-        rr.x = (int)transform.position.x - cam->x;
-        rr.y = (int)transform.position.y - cam->y;
+        rr.x = transform.position.x - cam->x;
+        rr.y = transform.position.y - cam->y;
         
         SDL_SetRenderDrawColor(rend, 255, 255, 255, 255);
         SDL_RenderFillRect(rend, &rr);

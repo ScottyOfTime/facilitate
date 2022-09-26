@@ -3,5 +3,5 @@
 
 typedef struct Velocity
 {
-    Vec2 vel;
+    int x, y;
 } Velocity;

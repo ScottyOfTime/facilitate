@@ -19,27 +19,26 @@ void PlayerControlSystem::update(float dt)
     {
         printf("WE HAVE AN ENTITY\n");
         auto& velocity = coordinator.get_component<Velocity>(ent);
-        Vec2& vel = velocity.vel;
 
-        vel.x = 0;
-        vel.y = 0;
+        velocity.x = 0;
+        velocity.y = 0;
 
         if (state[SDL_SCANCODE_W]) {
-            vel.y -= PLAYER_SPEED;
+            velocity.y -= PLAYER_SPEED;
         }
         if (state[SDL_SCANCODE_S]) {
-            vel.y += PLAYER_SPEED;
+            velocity.y += PLAYER_SPEED;
         }
         if (state[SDL_SCANCODE_A]) {
-            vel.x -= PLAYER_SPEED;
+            velocity.x -= PLAYER_SPEED;
         }
         if (state[SDL_SCANCODE_D]) {
-            vel.x += PLAYER_SPEED;
+            velocity.x += PLAYER_SPEED;
         }
 
-        if (vel.x && vel.y) {
-            vel.x = SIN_45 * vel.x;
-            vel.y = SIN_45 * vel.y;
+        if (velocity.x && velocity.y) {
+            velocity.x = SIN_45 * velocity.x;
+            velocity.y = SIN_45 * velocity.y;
         }
     }
 }

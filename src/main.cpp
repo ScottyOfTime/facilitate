@@ -119,8 +119,8 @@ int game_loop(SDL_Renderer *rend)
             });
     coordinator.add_component(player, Velocity{0, 0});
     SDL_Rect r;
-    r.w = 20;
-    r.h = 20;
+    r.w = 24;
+    r.h = 64;
     r.x = 60;
     r.y = 60;
     coordinator.add_component(player, Renderable{
@@ -160,13 +160,13 @@ int game_loop(SDL_Renderer *rend)
         }
         timeStep = (float)t.timer_get_ticks() / 1000.f;
 
-        cam.x = (coordinator.get_component<Transform>(player).position.x
-                + 20 / 2) - WIN_WIDTH / 2;
-        cam.y = (coordinator.get_component<Transform>(player).position.y 
-                + 20 / 2) - WIN_HEIGHT / 2;
         playerSystem->update(timeStep);
         collisionSystem->update(timeStep);
         physicsSystem->update(timeStep);
+        cam.x = ((int)coordinator.get_component<Transform>(player).position.x
+                + 20 / 2) - WIN_WIDTH / 2;
+        cam.y = ((int)coordinator.get_component<Transform>(player).position.y 
+                + 20 / 2) - WIN_HEIGHT / 2;
 
         t.start_timer();
 

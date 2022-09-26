@@ -1,5 +1,6 @@
 #include <SDL.h>
 #include "ecs/system.hpp"
+#include "ecs/components/collider.hpp"
 
 #pragma once
 
