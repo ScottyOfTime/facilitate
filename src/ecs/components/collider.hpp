@@ -8,13 +8,6 @@ typedef struct Collider
     float x, y;
 } Collider;
 
-Collider rect_to_collider(SDL_Rect rect)
-{
-    Collider c;
-    c.w = rect.w;
-    c.h = rect.h;
-    c.x = rect.x;
-    c.y = rect.y;
+Collider rect_to_collider(SDL_Rect rect);
 
-    return c;
-}
+SDL_Rect collider_to_rect(Collider col);

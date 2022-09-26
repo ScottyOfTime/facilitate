@@ -3,7 +3,6 @@
 #include <SDL.h>
 
 #include "timer.hpp"
-#include "object.hpp"
 #include "ecs/coordinator.hpp"
 #include "ecs/components/renderable.hpp"
 #include "ecs/components/transform.hpp"
@@ -69,10 +68,7 @@ int game_loop(SDL_Renderer *rend)
     Timer t = Timer();
     float timeStep;
     const uint8_t *state = SDL_GetKeyboardState(NULL);
-    std::vector<SDL_Rect*> collisionVec;
 
-    Object box1 = Object(100, 100, 128, 128);
-    collisionVec.push_back(box1.get_cbox_ref());
 
     /* ECS STUFF */
     coordinator.init();
@@ -144,7 +140,7 @@ int game_loop(SDL_Renderer *rend)
     col.w = 100;
     col.h = 100;
     coordinator.add_component(box, Renderable{
-            .rect = r});
+            .rect = collider_to_rect(col)});
     coordinator.add_component(box, col);
 
     /* END ECS STUFF */
@@ -175,11 +171,6 @@ int game_loop(SDL_Renderer *rend)
 
         renderSystem->update(timeStep);
 
-        /*SDL_SetRenderDrawColor(rend, 62, 73, 92, 255);
-        SDL_RenderClear(rend);
-        box1.render(rend, &cam);
-        p->render(rend, &cam);
-        SDL_RenderPresent(rend);*/
         SDL_Delay(1);
     }
     return 0;

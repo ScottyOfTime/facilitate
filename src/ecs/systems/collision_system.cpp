@@ -32,21 +32,22 @@ void CollisionSystem::update(float dt)
                  * Two collision checks are dont to seperate axes and allow 
                  * sliding along objects. 
                  */
-                Collider r1;
+                SDL_Rect r1;
                 r1.w = collider.w;
                 r1.h = collider.h;
                 r1.x = collider.x + (velocity.vel.x * dt);
                 r1.y = collider.y;
 
-                Collider r2;
+                SDL_Rect r2;
                 r2.w = collider.w;
                 r2.h = collider.h;
                 r2.x = collider.x;
                 r2.y = collider.y + (velocity.vel.y * dt);
-                if (check_collision(&r1, &colliderOther)) {
+                SDL_Rect rOther = collider_to_rect(colliderOther);
+                if (check_collision(&r1, &rOther)) {
                     velocity.vel.x = 0;
                 }
-                if (check_collision(&r2, &colliderOther)) {
+                if (check_collision(&r2, &rOther)) {
                     velocity.vel.y = 0;
                 }
             }

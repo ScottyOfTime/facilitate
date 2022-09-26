@@ -5,7 +5,6 @@ find_package(SDL2_image REQUIRED)
 add_executable(facilitate
     main.cpp
     timer.cpp
-    object.cpp
     texture.cpp
 )
 
@@ -14,6 +13,7 @@ target_sources(facilitate PRIVATE
     ecs/systems/render_system.cpp
     ecs/systems/player_control_system.cpp
     ecs/systems/collision_system.cpp
+    ecs/components/collider.cpp
 )
 
 target_include_directories(facilitate PRIVATE 

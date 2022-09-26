@@ -3,7 +3,7 @@
 
 #pragma once
 
-uint8_t check_collision(Collider *a, Collider *b)
+uint8_t check_collision(SDL_Rect *a, SDL_Rect *b)
 {
     return (
         a->x < b->x + b->w &&
@@ -13,7 +13,7 @@ uint8_t check_collision(Collider *a, Collider *b)
     );
 }
 
-uint8_t check_n_collisions(Collider *a, Collider **b, int n)
+uint8_t check_n_collisions(SDL_Rect *a, SDL_Rect **b, int n)
 {
     for (int i = 0; i < n; i++) {
         if (check_collision(a, b[i])) {
