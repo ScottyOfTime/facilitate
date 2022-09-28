@@ -12,13 +12,13 @@ Texture::~Texture()
     free();
 }
 
-uint8_t Texture::loadFromFile(char* path, SDL_Renderer *rend)
+uint8_t Texture::load_from_file(const char *path, SDL_Renderer *rend)
 {
     free();
 
-    SDL_Texture* newTex = NULL;
+    SDL_Texture *newTex = NULL;
 
-    SDL_Surface* surf = IMG_Load(path);
+    SDL_Surface *surf = IMG_Load(path);
     if (surf == NULL) {
         fprintf(stderr, "Unable to load image %s, SDL_Image Error: %s",
                 path, IMG_GetError());
@@ -37,6 +37,20 @@ uint8_t Texture::loadFromFile(char* path, SDL_Renderer *rend)
     }
     tex = newTex;
     return tex != NULL;
+}
+
+void Texture::render(int x, int y, SDL_Renderer *rend, SDL_Rect *clip)
+{
+    SDL_Rect renderQuad = {x, y, w, h};
+    
+    if (clip) {
+        renderQuad.w = clip->w;
+        renderQuad.h = clip->h;
+    }
+
+    if (SDL_RenderCopy(rend, tex, clip, &renderQuad) < 0) {
+        printf("Can't render: %s\n", SDL_GetError());
+    }
 }
 
 void Texture::free()

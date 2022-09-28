@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <vector>
 #include <SDL.h>
+#include <SDL_image.h>
 
 #include "timer.hpp"
 #include "ecs/coordinator.hpp"
@@ -42,6 +43,13 @@ int main(int argc, char *argv[])
     if (rend == NULL) {
         fprintf(stderr, "Could not create SDL renderer, SDL Error: %s\n",
             SDL_GetError());
+        return 1;
+    }
+    int imgFlags = IMG_INIT_PNG;
+    if (!(IMG_Init(imgFlags) & imgFlags)) {
+        fprintf(stderr, "Could not initialize! SDL_image Error: %s\n",
+                IMG_GetError());
+        return 1;
     }
     
     SDL_SetRenderDrawColor(rend, 62, 73, 92, 255);
@@ -123,8 +131,12 @@ int game_loop(SDL_Renderer *rend)
     r.h = 64;
     r.x = 60;
     r.y = 60;
+    Texture playerTexture;
+    uint8_t res = playerTexture.load_from_file("/home/scotty/plgr/cpp/facilitate/dis.png", rend);
+    printf("Res = %d\n", res);
     coordinator.add_component(player, Renderable{
-            .rect = r});
+            .rect = r,
+            .tex = &playerTexture});
     Collider col = rect_to_collider(r);
     coordinator.add_component(player, col);
     coordinator.add_component(player, Player{1});
@@ -170,6 +182,7 @@ int game_loop(SDL_Renderer *rend)
 
         t.start_timer();
 
+        playerTexture.render(180, 180, rend);
         renderSystem->update(timeStep);
 
         SDL_Delay(1);

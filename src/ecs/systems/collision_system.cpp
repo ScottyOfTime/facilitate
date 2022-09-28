@@ -22,11 +22,11 @@ void CollisionSystem::update(float dt)
         for (auto const& entOther : entities)
         {
             if (ent != entOther) {
-                printf("Collision system: Checking Entity %d against Entity %d\n", ent, entOther);
+                //printf("Collision system: Checking Entity %d against Entity %d\n", ent, entOther);
                 auto& colliderOther = coordinator.get_component<Collider>(entOther);
-                printf("(%d, %d, %f, %f), (%d, %d, %f, %f)\n",
-                        collider.w, collider.h, collider.x, collider.y,
-                        colliderOther.w, colliderOther.h, colliderOther.x, colliderOther.y);
+                //printf("(%d, %d, %f, %f), (%d, %d, %f, %f)\n",
+                        //collider.w, collider.h, collider.x, collider.y,
+                        //colliderOther.w, colliderOther.h, colliderOther.x, colliderOther.y);
                 /* COLLISION HANDLING
                  *
                  * Two collision checks are dont to seperate axes and allow 

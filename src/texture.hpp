@@ -10,11 +10,11 @@ public:
     Texture();
     ~Texture();
 
-    uint8_t loadFromFile(char* path, SDL_Renderer* rend);
+    uint8_t load_from_file(const char *path, SDL_Renderer *rend);
+    void render(int x, int y, SDL_Renderer *rend, SDL_Rect* clip = NULL);
     void free();
-    void render(int x, int y, SDL_Rect* clip = NULL);
 
 private:
-    SDL_Texture* tex;
+    SDL_Texture *tex;
     int w, h;
 };

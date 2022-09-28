@@ -17,7 +17,7 @@ void PlayerControlSystem::update(float dt)
 {
     for (auto const& ent : entities)
     {
-        printf("WE HAVE AN ENTITY\n");
+        //printf("WE HAVE AN ENTITY\n");
         auto& velocity = coordinator.get_component<Velocity>(ent);
 
         velocity.x = 0;

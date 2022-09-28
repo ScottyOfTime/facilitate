@@ -20,7 +20,7 @@ void RenderSystem::update(float dt)
         auto& transform = coordinator.get_component<Transform>(ent);
 
 
-        printf("Rendering at (%f, %f)\n", transform.position.x, transform.position.y);
+        //printf("Rendering at (%f, %f)\n", transform.position.x, transform.position.y);
 
         SDL_Rect rr;
         rr.w = renderable.rect.w;
@@ -31,6 +31,10 @@ void RenderSystem::update(float dt)
         SDL_SetRenderDrawColor(rend, 255, 255, 255, 255);
         SDL_RenderFillRect(rend, &rr);
         SDL_RenderDrawRect(rend, &rr);
+
+        if (renderable.tex != NULL) {
+            renderable.tex->render(transform.position.x, transform.position.y, rend);
+        }
     }
     SDL_RenderPresent(rend);
 }
