@@ -33,7 +33,16 @@ void RenderSystem::update(float dt)
         SDL_RenderDrawRect(rend, &rr);
 
         if (renderable.tex != NULL) {
-            renderable.tex->render(transform.position.x, transform.position.y, rend);
+            SDL_Rect r;
+            r.x = 0;
+            r.y = 0;
+            r.w = 45;
+            r.h = 51;
+            if (renderable.tex->has_sheet()) {
+                renderable.tex->render_sheet(rr.x, rr.y, rend, dt);
+            } else {
+                renderable.tex->render(rr.x, rr.y, rend);
+            }
         }
     }
     SDL_RenderPresent(rend);

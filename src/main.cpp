@@ -127,13 +127,24 @@ int game_loop(SDL_Renderer *rend)
             });
     coordinator.add_component(player, Velocity{0, 0});
     SDL_Rect r;
-    r.w = 24;
-    r.h = 64;
+    r.w = 45;
+    r.h = 51;
     r.x = 60;
     r.y = 60;
     Texture playerTexture;
     uint8_t res = playerTexture.load_from_file("/home/scotty/plgr/cpp/facilitate/dis.png", rend);
-    printf("Res = %d\n", res);
+    printf("Generating sprite clips\n");
+    SDL_Rect spriteClips[14];
+    for (int i = 0; i < 14; i++) {
+        SDL_Rect clip;
+        clip.w = 26;
+        clip.h = 55;
+        clip.x = 29 * i;
+        clip.y = 0;
+        spriteClips[i] = clip;
+    }
+    playerTexture.set_sheet(spriteClips, 14);
+
     coordinator.add_component(player, Renderable{
             .rect = r,
             .tex = &playerTexture});
@@ -151,8 +162,9 @@ int game_loop(SDL_Renderer *rend)
     col.y = 120;
     col.w = 100;
     col.h = 100;
+    SDL_Rect col_from_rect = collider_to_rect(col);
     coordinator.add_component(box, Renderable{
-            .rect = collider_to_rect(col)});
+            .rect = col_from_rect});
     coordinator.add_component(box, col);
 
     /* END ECS STUFF */

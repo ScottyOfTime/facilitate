@@ -58,3 +58,13 @@ uint32_t Timer::timer_get_ticks()
         }
     }
 }
+
+bool Timer::is_started()
+{
+    return started;
+}
+
+bool Timer::is_paused()
+{
+    return paused;
+}
