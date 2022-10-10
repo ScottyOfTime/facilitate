@@ -3,6 +3,11 @@
 #pragma once
 
 typedef struct Renderable {
-    SDL_Rect rect;
+    // The base level
+    SDL_Rect *rect;
     Texture *tex;
+    SDL_Rect clip;
+    // Debug extension
+    bool hasCollision;
+    SDL_Rect *collision;
 } Renderable;

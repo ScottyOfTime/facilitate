@@ -5,16 +5,26 @@
 
 extern Coordinator coordinator;
 
-void RenderSystem::init(SDL_Renderer *renderer, SDL_Rect *camera)
+void RenderSystem::init(SDL_Renderer *renderer, SDL_Rect *camera, Level *level)
 {
     rend = renderer;
     cam = camera;
+    lvl = level;
+    //SDL_RenderSetScale(rend, 1.3f, 1.3f);
 }
 
 void RenderSystem::update(float dt)
 {
     SDL_SetRenderDrawColor(rend, 62, 73, 92, 255);
     SDL_RenderClear(rend);
+    
+    /* Always render level first */
+    if (lvl != NULL) {
+        lvl->render_level(rend, cam);
+        //tmap->render_tile("14_wall", 64, 64, rend, cam);
+        //tmap->render_tile("11_roofPillar", 64, -32, rend, cam);
+    }
+
     for (auto const& ent : entities) {
         auto& renderable = coordinator.get_component<Renderable>(ent);
         auto& transform = coordinator.get_component<Transform>(ent);
@@ -22,27 +32,36 @@ void RenderSystem::update(float dt)
 
         //printf("Rendering at (%f, %f)\n", transform.position.x, transform.position.y);
 
-        SDL_Rect rr;
-        rr.w = renderable.rect.w;
-        rr.h = renderable.rect.h;
-        rr.x = transform.position.x - cam->x;
-        rr.y = transform.position.y - cam->y;
         
-        SDL_SetRenderDrawColor(rend, 255, 255, 255, 255);
-        SDL_RenderFillRect(rend, &rr);
-        SDL_RenderDrawRect(rend, &rr);
-
+        /* If entity renderable has texture */
         if (renderable.tex != NULL) {
             SDL_Rect r;
             r.x = 0;
             r.y = 0;
             r.w = 45;
             r.h = 51;
-            if (renderable.tex->has_sheet()) {
-                renderable.tex->render_sheet(rr.x, rr.y, rend, dt);
-            } else {
-                renderable.tex->render(rr.x, rr.y, rend);
-            }
+            renderable.tex->render(transform.position.x - cam->x, transform.position.y - cam->y, 
+                    rend, &renderable.clip);
+        }
+        /* If entity renderable has a rectangle */
+        if (renderable.rect != NULL) {
+            SDL_Rect rr;
+            rr.w = renderable.rect->w;
+            rr.h = renderable.rect->h;
+            rr.x = transform.position.x - cam->x;
+            rr.y = transform.position.y - cam->y;
+            SDL_SetRenderDrawColor(rend, 255, 255, 255, 255);
+            SDL_RenderFillRect(rend, &rr);
+            SDL_RenderDrawRect(rend, &rr);
+        }
+        if (renderable.hasCollision) {
+            auto& collider = coordinator.get_component<Collider>(ent);
+            printf("Entity %d\n", ent);
+            SDL_Rect cr = collider_to_rect(collider);
+            cr.x = collider.x + transform.position.x - cam->x;
+            cr.y = collider.y + transform.position.y - cam->y;
+            SDL_SetRenderDrawColor(rend, 255, 0, 0, 255);
+            SDL_RenderDrawRect(rend, &cr);
         }
     }
     SDL_RenderPresent(rend);

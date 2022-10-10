@@ -5,7 +5,6 @@ Texture::Texture()
     tex = NULL;
     w = 0;
     h = 0;
-    frame = 0;
 }
 
 Texture::~Texture()
@@ -40,47 +39,21 @@ uint8_t Texture::load_from_file(const char *path, SDL_Renderer *rend)
     return tex != NULL;
 }
 
-void Texture::set_sheet(SDL_Rect *sh, int shSz)
-{
-    sheet = sh;
-    sheetSz = shSz;
-}
 
 void Texture::render(int x, int y, SDL_Renderer *rend, SDL_Rect *clip)
 {
     SDL_SetRenderDrawBlendMode(rend, SDL_BLENDMODE_BLEND);
     SDL_SetTextureBlendMode(tex, SDL_BLENDMODE_BLEND);
-    SDL_Rect renderQuad = {x, y, w, h};
+    SDL_Rect renderQuad = {x, y, w , h};
     
     if (clip) {
-        renderQuad.w = clip->w;
-        renderQuad.h = clip->h;
+        renderQuad.w = clip->w * 2;
+        renderQuad.h = clip->h * 2;
     }
 
     if (SDL_RenderCopy(rend, tex, clip, &renderQuad) < 0) {
         printf("Can't render: %s\n", SDL_GetError());
     }
-}
-
-void Texture::render_sheet(int x, int y, SDL_Renderer *rend, float dt) 
-{
-    if (!timer.is_started()) {
-        timer.start_timer();
-    }
-    if (timer.timer_get_ticks() > 100) {
-        if (frame == sheetSz - 1) {
-            frame = 0;
-        } else {
-            frame++;
-        }
-        timer.start_timer();
-    }
-    render(x, y, rend, &sheet[frame]);
-}
-
-uint8_t Texture::has_sheet()
-{
-    return sheet != NULL;
 }
 
 void Texture::free()

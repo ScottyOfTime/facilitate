@@ -6,6 +6,9 @@ add_executable(facilitate
     main.cpp
     timer.cpp
     texture.cpp
+    animation.cpp
+    tilemap.cpp
+    level.cpp
 )
 
 target_sources(facilitate PRIVATE
@@ -13,6 +16,7 @@ target_sources(facilitate PRIVATE
     ecs/systems/render_system.cpp
     ecs/systems/player_control_system.cpp
     ecs/systems/collision_system.cpp
+    ecs/systems/animation_system.cpp
     ecs/components/collider.cpp
 )
 
