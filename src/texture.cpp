@@ -1,4 +1,6 @@
+#include <stdio.h>
 #include "texture.hpp"
+
 
 Texture::Texture()
 {

@@ -2,6 +2,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include "timer.hpp"
+#include "math.hpp"
 
 #pragma once
 

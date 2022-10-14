@@ -19,8 +19,8 @@
 #include "ecs/systems/collision_system.hpp"
 #include "ecs/systems/animation_system.hpp"
 
-const int WIN_HEIGHT = 480;
-const int WIN_WIDTH = 640;
+const int WIN_HEIGHT = 1080;
+const int WIN_WIDTH = 1920;
 
 int game_loop(SDL_Renderer *rend);
 Level construct_sample_level(Tilemap *tmap);
@@ -84,8 +84,10 @@ int game_loop(SDL_Renderer *rend)
 
     /* BEGIN TILEMAP STUFF */
 
-    Tilemap tilemap;
-    tilemap.load_tilemap_from_file("/home/scotty/plgr/cpp/facilitate/tileset.png", 64, 64, rend);
+    /* OLD TILEMAP */
+
+    /*Tilemap tilemap;
+    tilemap.load_tilemap_from_file("assets/tileset.png", 64, 64, rend);
     tilemap.register_tile("00_blank", 0, 0);
     tilemap.register_tile("01_uselessWall", 64, 0);
     tilemap.register_tile("02_floorTopRight", 128, 0);
@@ -109,9 +111,27 @@ int game_loop(SDL_Renderer *rend)
     tilemap.register_tile("20_roofBottomLeft", 128, 192);
     tilemap.register_tile("21_roofTopRight", 192, 192);
     tilemap.register_tile("22_roofVertBottom", 256, 192);
-    tilemap.register_tile("23_vine", 320, 192);
+    tilemap.register_tile("23_vine", 320, 192);*/
 
-    Tilemap *tilemap_ptr = &tilemap;
+    Tilemap sandMap;
+
+    sandMap.load_tilemap_from_file("assets/sandMap.png", 56, 56, rend);
+    sandMap.register_tile("00_blank", 0, 0);
+    sandMap.register_tile("01_wall", 56, 0);
+    sandMap.register_tile("02_roofHori", 112, 0);
+    sandMap.register_tile("03_roofHoriLeft", 168, 0);
+    sandMap.register_tile("04_roofHoriRight", 0, 56);
+    sandMap.register_tile("05_roofCornerLeftT", 56, 56);
+    sandMap.register_tile("06_roofCornerRightT", 112, 56);
+    sandMap.register_tile("07_roofVert", 168, 56);
+    sandMap.register_tile("08_roofVertBottom", 0, 112);
+    sandMap.register_tile("09_roofCornerLeftB", 56, 112);
+    sandMap.register_tile("10_roofCornerRightB", 112, 112);
+    sandMap.register_tile("11_roofVertTop", 168, 112);
+    sandMap.register_tile("12_roofPillar", 0, 168);
+    sandMap.register_tile("13_floor", 56, 168);
+
+    Tilemap *tilemap_ptr = &sandMap;
     Level level = construct_sample_level(tilemap_ptr);
     /* END TILEMAP STUFF */
 
@@ -134,6 +154,7 @@ int game_loop(SDL_Renderer *rend)
 
     /* COLLISION SYSTEM SETUP */
     auto collisionSystem = coordinator.register_system<CollisionSystem>();
+    collisionSystem->init(&level);
     signature.reset();
     signature.set(coordinator.get_component_type<Transform>());
     signature.set(coordinator.get_component_type<Velocity>());
@@ -201,8 +222,8 @@ int game_loop(SDL_Renderer *rend)
     
     auto player = coordinator.create_entity();
     coordinator.add_component(player, Transform{
-            .position = Vec2{60, 60},
-            .scale = Vec2{2.5f, 2.5f}
+            .position = Vec2{160, 160},
+            .scale = Vec2{2, 2}
             });
     coordinator.add_component(player, Velocity{0, 0});
     r.w = 52;
@@ -210,7 +231,7 @@ int game_loop(SDL_Renderer *rend)
     r.x = 0;
     r.y = 60;
     Texture playerTexture;
-    uint8_t res = playerTexture.load_from_file("/home/scotty/plgr/cpp/facilitate/dis.png", rend);
+    uint8_t res = playerTexture.load_from_file("assets/dis.png", rend);
     printf("Generating sprite clips\n");
     SDL_Rect spriteClips[14];
     for (int i = 0; i < 14; i++) {
@@ -266,7 +287,6 @@ int game_loop(SDL_Renderer *rend)
         t.start_timer();
         
         animationSystem->update(timeStep);
-        //tilemap.render_tile("02_floorTopRight", 150, 150, rend, &cam);
         renderSystem->update(timeStep);
 
         SDL_Delay(1);
@@ -277,40 +297,41 @@ int game_loop(SDL_Renderer *rend)
 Level construct_sample_level(Tilemap* tmap)
 {
     Level l;
-    l.add_tile(0, 0, 1, tmap, "19_roofTopLeft");
-    l.add_tile(64 * 2, 0, 1, tmap, "15_roofHoriCentre");
-    l.add_tile(128 * 2, 0, 1, tmap, "15_roofHoriCentre");
-    l.add_tile(192 * 2, 0, 1, tmap, "15_roofHoriCentre");
-    l.add_tile(256 * 2, 0, 1, tmap, "21_roofTopRight");
+    l.add_tile(0, 0, 1, tmap, "05_roofCornerLeftT");
+    l.add_tile(56 * 2, 0, 1, tmap, "02_roofHori");
+    l.add_tile(112 * 2, 1, 1, tmap, "02_roofHori");
+    l.add_tile(168 * 2, 1, 1, tmap, "02_roofHori");
+    l.add_tile(224 * 2, 0, 1, tmap, "06_roofCornerRightT");
 
-    l.add_tile(0, 64 * 2, 1, tmap, "13_roofVertCentre");
-    l.add_tile(64 * 2, 64 * 2, 1, tmap, "14_wall");
-    l.add_tile(128 * 2, 64 * 2, 1, tmap, "14_wall");
-    l.add_tile(192 * 2, 64 * 2, 1, tmap, "14_wall");
-    l.add_tile(256 * 2, 64 * 2, 1, tmap, "13_roofVertCentre");
+    l.add_tile(0, 56 * 2, 1, tmap, "07_roofVert");
+    l.add_tile(56 * 2, 56 * 2, 1, tmap, "01_wall");
+    l.add_tile(112 * 2, 56 * 2, 1, tmap, "01_wall");
+    l.add_tile(168 * 2, 56 * 2, 1, tmap, "01_wall");
+    l.add_tile(224 * 2, 56 * 2, 1, tmap, "07_roofVert");
 
-    l.add_tile(0 * 2, 128 * 2, 1, tmap, "13_roofVertCentre");
-    l.add_tile(64 * 2, 128 * 2, 1, tmap, "05_floorTopLeft");
-    l.add_tile(128 * 2, 128 * 2, 1, tmap, "07_floorCentreTop");
-    l.add_tile(192 * 2, 128 * 2, 1, tmap, "02_floorTopRight");
-    l.add_tile(256 * 2, 128 * 2, 1, tmap, "13_roofVertCentre");
+    l.add_tile(0, 112 * 2, 1, tmap, "07_roofVert");
+    l.add_tile(56 * 2, 112 * 2, 0, tmap, "13_floor");
+    l.add_tile(112 * 2, 112 * 2, 0, tmap, "13_floor");
+    l.add_tile(168 * 2, 112 * 2, 0, tmap, "13_floor");
+    l.add_tile(224 * 2, 112 * 2, 1, tmap, "07_roofVert");
 
-    l.add_tile(0 * 2, 192 * 2, 1, tmap, "13_roofVertCentre");
-    l.add_tile(64 * 2, 192 * 2, 1, tmap, "06_floorCentreLeft");
-    l.add_tile(128 * 2, 192 * 2, 1, tmap, "09_floorCentre");
-    l.add_tile(192 * 2, 192 * 2, 1, tmap, "08_floorCentreRight");
-    l.add_tile(256 * 2, 192 * 2, 1, tmap, "13_roofVertCentre");
-    
-    l.add_tile(0 * 2, 256 * 2, 1, tmap, "13_roofVertCentre");
-    l.add_tile(64 * 2, 256 * 2, 1, tmap, "03_floorBottomLeft");
-    l.add_tile(128 * 2, 256 * 2, 1, tmap, "10_floorCentreBottom");
-    l.add_tile(192 * 2, 256 * 2, 1, tmap, "04_floorBottomRight");
-    l.add_tile(256 * 2, 256 * 2, 1, tmap, "13_roofVertCentre");
+    l.add_tile(0, 168 * 2, 1, tmap, "07_roofVert");
+    l.add_tile(56 * 2, 168 * 2, 0, tmap, "13_floor");
+    l.add_tile(112 * 2, 168 * 2, 0, tmap, "13_floor");
+    l.add_tile(168 * 2, 168 * 2, 0, tmap, "13_floor");
+    l.add_tile(224 * 2, 168 * 2, 1, tmap, "07_roofVert");
 
-    l.add_tile(0 * 2, 320 * 2, 1, tmap, "20_roofBottomLeft");
-    l.add_tile(64 * 2, 320 * 2, 1, tmap, "15_roofHoriCentre");
-    l.add_tile(128 * 2, 320 * 2, 1, tmap, "15_roofHoriCentre");
-    l.add_tile(192 * 2, 320 * 2, 1, tmap, "15_roofHoriCentre");
-    l.add_tile(256 * 2, 320 * 2, 1, tmap, "17_roofBottomRight");
+    l.add_tile(0, 224 * 2, 1, tmap, "07_roofVert");
+    l.add_tile(56 * 2, 224 * 2, 0, tmap, "13_floor");
+    l.add_tile(112 * 2, 224 * 2, 0, tmap, "13_floor");
+    l.add_tile(168 * 2, 224 * 2, 0, tmap, "13_floor");
+    l.add_tile(224 * 2, 224 * 2, 1, tmap, "07_roofVert");
+
+    l.add_tile(0, 280 * 2, 1, tmap, "09_roofCornerLeftB");
+    l.add_tile(56 * 2, 280 * 2, 1, tmap, "02_roofHori");
+    l.add_tile(112 * 2, 280 * 2, 1, tmap, "02_roofHori");
+    l.add_tile(168 * 2, 280 * 2, 1, tmap, "02_roofHori");
+    l.add_tile(224 * 2, 280 * 2, 1, tmap, "10_roofCornerRightB");
+
     return l;
 }

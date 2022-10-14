@@ -24,11 +24,12 @@ public:
     Tile(int x, int y, int tileType, Tilemap* tilemap, std::string tileName);
     
     int get_type();
+    Vec2 get_pos();
     SDL_Rect* get_clip();
     void render(SDL_Renderer *rend, SDL_Rect *camera);
     
 private:
-    int posX, posY;
+    Vec2 pos;
     SDL_Rect clip;
     Tilemap* tmap;
     int type;

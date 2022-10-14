@@ -4,6 +4,8 @@
 #include "texture.hpp"
 #include "timer.hpp"
 
+#pragma once
+
 typedef struct Animation {
     Texture* sheet;
     std::vector<SDL_Rect> cells;

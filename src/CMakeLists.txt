@@ -1,4 +1,5 @@
 set(SDL2_DIR "C:/devel/SDL2-VC/cmake")
+set(SDL2_IMAGE_PATH "C:/devel/SDL2_image-VC")
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 
@@ -9,6 +10,7 @@ add_executable(facilitate
     animation.cpp
     tilemap.cpp
     level.cpp
+    collision.cpp
 )
 
 target_sources(facilitate PRIVATE

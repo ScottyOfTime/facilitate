@@ -20,7 +20,9 @@ void RenderSystem::update(float dt)
     
     /* Always render level first */
     if (lvl != NULL) {
+        printf("rendering level\n");
         lvl->render_level(rend, cam);
+        lvl->render_tile_collision(rend, cam);
         //tmap->render_tile("14_wall", 64, 64, rend, cam);
         //tmap->render_tile("11_roofPillar", 64, -32, rend, cam);
     }

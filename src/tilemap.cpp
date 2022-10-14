@@ -5,8 +5,8 @@
 /* Tile Class */
 Tile::Tile(int x, int y, int tileType, Tilemap* tilemap, std::string tileName)
 {
-    posX = x;
-    posY = y;
+    pos.x = x;
+    pos.y = y;
 
     tmap = tilemap; 
     std::cout << tileName << std::endl;
@@ -15,15 +15,26 @@ Tile::Tile(int x, int y, int tileType, Tilemap* tilemap, std::string tileName)
     type = tileType;
 }
 
+int Tile::get_type()
+{
+    return type;
+}
+
+/* Returns clip in tilemap texture */
 SDL_Rect* Tile::get_clip()
 {
     return &clip;
 }
 
+Vec2 Tile::get_pos()
+{
+    return pos;
+}
+
 void Tile::render(SDL_Renderer *rend, SDL_Rect* camera)
 {
     Texture* tex = tmap->get_texture();
-    tex->render(posX - camera->x, posY - camera->y, rend, &clip, Vec2{2, 2});
+    tex->render(pos.x - camera->x, pos.y - camera->y, rend, &clip, Vec2{2, 2});
 }
 
 /* Tilemap Class */
@@ -32,16 +43,19 @@ Tilemap::Tilemap(){}
 uint8_t Tilemap::load_tilemap_from_file(const char* path, int tileWidth, int tileHeight, 
         SDL_Renderer *rend)
 {
+    tileW = tileWidth;
+    tileH = tileHeight;
     return mapTex.load_from_file(path, rend);
 }
 
 void Tilemap::register_tile(std::string tileName, int x, int y)
 {
+    printf("%d, %d\n", tileW, tileH);
     SDL_Rect tileClip;
     tileClip.x = x;
     tileClip.y = y;
-    tileClip.w = TILE_WIDTH;
-    tileClip.h = TILE_HEIGHT;
+    tileClip.w = tileW;
+    tileClip.h = tileH;
     tileClips.insert({tileName, tileClip});
 }
 

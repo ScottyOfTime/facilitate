@@ -1,5 +1,5 @@
 /* Transform component */
-#include "math.h"
+#include "math.hpp"
 #pragma once
 
 typedef struct Transform
