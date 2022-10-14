@@ -9,6 +9,7 @@ Tile::Tile(int x, int y, int tileType, Tilemap* tilemap, std::string tileName)
     posY = y;
 
     tmap = tilemap; 
+    std::cout << tileName << std::endl;
     clip = tmap->get_tile_clip(tileName);
 
     type = tileType;
@@ -22,7 +23,7 @@ SDL_Rect* Tile::get_clip()
 void Tile::render(SDL_Renderer *rend, SDL_Rect* camera)
 {
     Texture* tex = tmap->get_texture();
-    tex->render(posX - camera->x, posY - camera->y, rend, &clip);
+    tex->render(posX - camera->x, posY - camera->y, rend, &clip, Vec2{2, 2});
 }
 
 /* Tilemap Class */

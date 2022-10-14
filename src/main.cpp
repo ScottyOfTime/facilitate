@@ -92,10 +92,10 @@ int game_loop(SDL_Renderer *rend)
     tilemap.register_tile("03_floorBottomLeft", 192, 0);
     tilemap.register_tile("04_floorBottomRight", 256, 0);
     tilemap.register_tile("05_floorTopLeft", 320, 0);
-    tilemap.register_tile("06_floorCentre", 0, 64);
+    tilemap.register_tile("06_floorCentreLeft", 0, 64);
     tilemap.register_tile("07_floorCentreTop", 64, 64);
     tilemap.register_tile("08_floorCentreRight", 128, 64);
-    tilemap.register_tile("09_floorCentreLeft", 192, 64);
+    tilemap.register_tile("09_floorCentre", 192, 64);
     tilemap.register_tile("10_floorCentreBottom", 256, 64);
     tilemap.register_tile("11_roofPillar", 320, 64);
     tilemap.register_tile("12_roofVertTop", 0, 128);
@@ -106,7 +106,7 @@ int game_loop(SDL_Renderer *rend)
     tilemap.register_tile("17_roofBottomRight", 320, 128);
     tilemap.register_tile("18_roofHoriLeft", 0, 192);
     tilemap.register_tile("19_roofTopLeft", 64, 192);
-    tilemap.register_tile("20_roofBottomRight", 128, 192);
+    tilemap.register_tile("20_roofBottomLeft", 128, 192);
     tilemap.register_tile("21_roofTopRight", 192, 192);
     tilemap.register_tile("22_roofVertBottom", 256, 192);
     tilemap.register_tile("23_vine", 320, 192);
@@ -171,7 +171,7 @@ int game_loop(SDL_Renderer *rend)
     r.h = 50;
     r.x = 0;
     r.y = 60;
-    auto box = coordinator.create_entity();
+    /*auto box = coordinator.create_entity();
     coordinator.add_component(box, Transform{
             .position = Vec2{120, 120},
             .scale = Vec2{1, 1}
@@ -197,12 +197,12 @@ int game_loop(SDL_Renderer *rend)
     SDL_Rect ghost_rect = SDL_Rect{200, 200, 64, 64};
     coordinator.add_component(ghost_box, Renderable{
             .rect = &ghost_rect
-            });
+            });*/
     
     auto player = coordinator.create_entity();
     coordinator.add_component(player, Transform{
             .position = Vec2{60, 60},
-            .scale = Vec2{1, 1}
+            .scale = Vec2{2.5f, 2.5f}
             });
     coordinator.add_component(player, Velocity{0, 0});
     r.w = 52;
@@ -280,12 +280,37 @@ Level construct_sample_level(Tilemap* tmap)
     l.add_tile(0, 0, 1, tmap, "19_roofTopLeft");
     l.add_tile(64 * 2, 0, 1, tmap, "15_roofHoriCentre");
     l.add_tile(128 * 2, 0, 1, tmap, "15_roofHoriCentre");
-    l.add_tile(196 * 2, 0, 1, tmap, "15_roofHoriCentre");
+    l.add_tile(192 * 2, 0, 1, tmap, "15_roofHoriCentre");
     l.add_tile(256 * 2, 0, 1, tmap, "21_roofTopRight");
+
     l.add_tile(0, 64 * 2, 1, tmap, "13_roofVertCentre");
     l.add_tile(64 * 2, 64 * 2, 1, tmap, "14_wall");
     l.add_tile(128 * 2, 64 * 2, 1, tmap, "14_wall");
     l.add_tile(192 * 2, 64 * 2, 1, tmap, "14_wall");
     l.add_tile(256 * 2, 64 * 2, 1, tmap, "13_roofVertCentre");
+
+    l.add_tile(0 * 2, 128 * 2, 1, tmap, "13_roofVertCentre");
+    l.add_tile(64 * 2, 128 * 2, 1, tmap, "05_floorTopLeft");
+    l.add_tile(128 * 2, 128 * 2, 1, tmap, "07_floorCentreTop");
+    l.add_tile(192 * 2, 128 * 2, 1, tmap, "02_floorTopRight");
+    l.add_tile(256 * 2, 128 * 2, 1, tmap, "13_roofVertCentre");
+
+    l.add_tile(0 * 2, 192 * 2, 1, tmap, "13_roofVertCentre");
+    l.add_tile(64 * 2, 192 * 2, 1, tmap, "06_floorCentreLeft");
+    l.add_tile(128 * 2, 192 * 2, 1, tmap, "09_floorCentre");
+    l.add_tile(192 * 2, 192 * 2, 1, tmap, "08_floorCentreRight");
+    l.add_tile(256 * 2, 192 * 2, 1, tmap, "13_roofVertCentre");
+    
+    l.add_tile(0 * 2, 256 * 2, 1, tmap, "13_roofVertCentre");
+    l.add_tile(64 * 2, 256 * 2, 1, tmap, "03_floorBottomLeft");
+    l.add_tile(128 * 2, 256 * 2, 1, tmap, "10_floorCentreBottom");
+    l.add_tile(192 * 2, 256 * 2, 1, tmap, "04_floorBottomRight");
+    l.add_tile(256 * 2, 256 * 2, 1, tmap, "13_roofVertCentre");
+
+    l.add_tile(0 * 2, 320 * 2, 1, tmap, "20_roofBottomLeft");
+    l.add_tile(64 * 2, 320 * 2, 1, tmap, "15_roofHoriCentre");
+    l.add_tile(128 * 2, 320 * 2, 1, tmap, "15_roofHoriCentre");
+    l.add_tile(192 * 2, 320 * 2, 1, tmap, "15_roofHoriCentre");
+    l.add_tile(256 * 2, 320 * 2, 1, tmap, "17_roofBottomRight");
     return l;
 }

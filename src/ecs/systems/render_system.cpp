@@ -41,7 +41,7 @@ void RenderSystem::update(float dt)
             r.w = 45;
             r.h = 51;
             renderable.tex->render(transform.position.x - cam->x, transform.position.y - cam->y, 
-                    rend, &renderable.clip);
+                    rend, &renderable.clip, transform.scale);
         }
         /* If entity renderable has a rectangle */
         if (renderable.rect != NULL) {

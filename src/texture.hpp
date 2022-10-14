@@ -12,7 +12,7 @@ public:
     ~Texture();
 
     uint8_t load_from_file(const char *path, SDL_Renderer *rend);
-    void render(int x, int y, SDL_Renderer *rend, SDL_Rect* clip = NULL);
+    void render(int x, int y, SDL_Renderer *rend, SDL_Rect* clip = NULL, Vec2 scale = Vec2{1, 1});
     void free();
 
 private:

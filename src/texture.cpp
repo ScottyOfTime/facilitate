@@ -40,15 +40,15 @@ uint8_t Texture::load_from_file(const char *path, SDL_Renderer *rend)
 }
 
 
-void Texture::render(int x, int y, SDL_Renderer *rend, SDL_Rect *clip)
+void Texture::render(int x, int y, SDL_Renderer *rend, SDL_Rect *clip, Vec2 scale)
 {
     SDL_SetRenderDrawBlendMode(rend, SDL_BLENDMODE_BLEND);
     SDL_SetTextureBlendMode(tex, SDL_BLENDMODE_BLEND);
     SDL_Rect renderQuad = {x, y, w , h};
     
     if (clip) {
-        renderQuad.w = clip->w * 2;
-        renderQuad.h = clip->h * 2;
+        renderQuad.w = clip->w * scale.x;
+        renderQuad.h = clip->h * scale.y;
     }
 
     if (SDL_RenderCopy(rend, tex, clip, &renderQuad) < 0) {
