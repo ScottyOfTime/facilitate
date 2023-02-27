@@ -12,6 +12,7 @@ void AnimationSystem::update(float dt)
         auto& animatedSprite = coordinator.get_component<AnimatedSprite>(ent);
         auto& renderable = coordinator.get_component<Renderable>(ent);
         animatedSprite.update_animation();
+        renderable.tex = animatedSprite.get_current_texture();
         renderable.clip = animatedSprite.get_current_cell();
     }
 }

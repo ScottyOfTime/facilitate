@@ -1,15 +1,16 @@
 #include "animation.hpp"
 
 void AnimatedSprite::create_animation(const char* anim_name, Texture* tex, uint8_t num_cells,
-        int cell_w, int cell_h, uint32_t rate, int cell_p)
+        int cell_w, int cell_h, uint32_t rate, uint8_t cols, int cell_p)
 {
     Animation anim;
     std::vector<SDL_Rect> cells;
     int padding = 0;
+    int frames_p_row = num_cells / cols;
     for (int i = 0; i < num_cells; i++) {
         cells.push_back(SDL_Rect{
-                .x = (i * cell_w) + padding,
-                .y = 0,
+                .x = (i % frames_p_row * cell_w) + padding,
+                .y = cell_h * (i / cols),
                 .w = cell_w,
                 .h = cell_h
                 });
@@ -64,4 +65,9 @@ void AnimatedSprite::update_animation()
 SDL_Rect AnimatedSprite::get_current_cell()
 {
     return currentAnim.cells[currentAnim.frame];
+}
+
+Texture* AnimatedSprite::get_current_texture()
+{
+    return currentAnim.sheet;
 }

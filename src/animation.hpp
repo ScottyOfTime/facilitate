@@ -18,11 +18,12 @@ class AnimatedSprite
 {
 public:
     void create_animation(const char* anim_name, Texture* tex, uint8_t num_cells, int cell_w, 
-            int cell_h, uint32_t rate, int cell_p = 0);
+            int cell_h, uint32_t rate, uint8_t cols = 1, int cell_p = 0);
     void play_animation(const char* anim, bool lp);
     void stop_animation();
     void update_animation();
     SDL_Rect get_current_cell();
+    Texture* get_current_texture();
 
     std::unordered_map<const char*, Animation> anims{};
     Animation currentAnim;

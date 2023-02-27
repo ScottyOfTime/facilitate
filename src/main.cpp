@@ -19,8 +19,8 @@
 #include "ecs/systems/collision_system.hpp"
 #include "ecs/systems/animation_system.hpp"
 
-const int WIN_HEIGHT = 1080;
-const int WIN_WIDTH = 1920;
+const int WIN_HEIGHT = 720;
+const int WIN_WIDTH = 1280;
 
 int game_loop(SDL_Renderer *rend);
 Level construct_sample_level(Tilemap *tmap);
@@ -231,20 +231,15 @@ int game_loop(SDL_Renderer *rend)
     r.x = 0;
     r.y = 60;
     Texture playerTexture;
+    Texture playerWalkingTexture;
     uint8_t res = playerTexture.load_from_file("assets/dis.png", rend);
-    printf("Generating sprite clips\n");
-    SDL_Rect spriteClips[14];
-    for (int i = 0; i < 14; i++) {
-        SDL_Rect clip;
-        clip.w = 26;
-        clip.h = 55;
-        clip.x = 29 * i;
-        clip.y = 0;
-        spriteClips[i] = clip;
-    }
+    uint8_t resW = playerWalkingTexture.load_from_file("assets/character_walking.png", rend);
     AnimatedSprite playerSprite;
-    playerSprite.create_animation("01_Idle", &playerTexture, 14, 29, 55, 100, 0);
+    playerSprite.create_animation("01_Idle", &playerTexture, 14, 29, 55, 100);
     playerSprite.play_animation("01_Idle", true);
+    playerSprite.create_animation("02_Walking", &playerWalkingTexture, 48, 30, 60, 100, 8);
+    playerSprite.play_animation("02_Walking", true);
+
     coordinator.add_component(player, playerSprite);
     r.w = 52;
     r.h = 30;

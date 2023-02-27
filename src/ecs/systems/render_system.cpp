@@ -20,7 +20,6 @@ void RenderSystem::update(float dt)
     
     /* Always render level first */
     if (lvl != NULL) {
-        printf("rendering level\n");
         lvl->render_level(rend, cam);
         lvl->render_tile_collision(rend, cam);
         //tmap->render_tile("14_wall", 64, 64, rend, cam);
@@ -56,9 +55,9 @@ void RenderSystem::update(float dt)
             SDL_RenderFillRect(rend, &rr);
             SDL_RenderDrawRect(rend, &rr);
         }
+        /* For debugging purposes (rendering the collision boxes) */
         if (renderable.hasCollision) {
             auto& collider = coordinator.get_component<Collider>(ent);
-            printf("Entity %d\n", ent);
             SDL_Rect cr = collider_to_rect(collider);
             cr.x = collider.x + transform.position.x - cam->x;
             cr.y = collider.y + transform.position.y - cam->y;
