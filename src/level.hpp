@@ -8,7 +8,7 @@
 class Level
 {
 public:
-    // load_level_from_file(const char* path)
+    void load_level_from_file(const char* path, Tilemap* tmap);
     void add_tile(int x, int y, int tileType, Tilemap* tilemap, std::string tileName);
     void render_level(SDL_Renderer* rend, SDL_Rect* camera);
     uint8_t check_tile_collision(SDL_Rect *rect);

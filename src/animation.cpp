@@ -1,16 +1,16 @@
 #include "animation.hpp"
 
-void AnimatedSprite::create_animation(const char* anim_name, Texture* tex, uint8_t num_cells,
-        int cell_w, int cell_h, uint32_t rate, uint8_t cols, int cell_p)
+void AnimatedSprite::create_animation(std::string anim_name, Texture* tex, uint8_t num_cells,
+        int cell_w, int cell_h, uint32_t rate, int y_off, uint8_t rows, int cell_p)
 {
     Animation anim;
     std::vector<SDL_Rect> cells;
     int padding = 0;
-    int frames_p_row = num_cells / cols;
+    int frames_p_row = num_cells / rows;
     for (int i = 0; i < num_cells; i++) {
         cells.push_back(SDL_Rect{
                 .x = (i % frames_p_row * cell_w) + padding,
-                .y = cell_h * (i / cols),
+                .y = y_off + cell_h * (i / frames_p_row),
                 .w = cell_w,
                 .h = cell_h
                 });
@@ -28,15 +28,19 @@ void AnimatedSprite::create_animation(const char* anim_name, Texture* tex, uint8
     }
 }
 
-void AnimatedSprite::play_animation(const char* anim_name, bool lp)
+void AnimatedSprite::play_animation(std::string anim_name, bool lp)
 {
     if (anims.find(anim_name) == anims.end()) {
         fprintf(stderr, "Animation '%s' does not exist.", anim_name);
         return;
     }
+    if (anim_name == currentAnimName) {
+        return;
+    }
     loop = lp;
     timer.start_timer();
     currentAnim = anims.at(anim_name);
+    currentAnimName = anim_name;
     playing = true;
 }
 

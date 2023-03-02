@@ -1,6 +1,18 @@
 /* Level class implementations */ 
 #include "level.hpp"
 #include "collision.hpp"
+#include <fstream>
+#include <iostream>
+
+void Level::load_level_from_file(const char* path)
+{
+    std::fstream levelFile{path};
+    std::string line;
+    int x, y = 0;
+    while (std::getline(levelFile, line)) {
+        std::cout << line << std::endl; 
+    }
+}
 
 void Level::add_tile(int x, int y, int tileType, Tilemap* tilemap, std::string tileName)
 {

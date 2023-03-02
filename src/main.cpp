@@ -84,35 +84,6 @@ int game_loop(SDL_Renderer *rend)
 
     /* BEGIN TILEMAP STUFF */
 
-    /* OLD TILEMAP */
-
-    /*Tilemap tilemap;
-    tilemap.load_tilemap_from_file("assets/tileset.png", 64, 64, rend);
-    tilemap.register_tile("00_blank", 0, 0);
-    tilemap.register_tile("01_uselessWall", 64, 0);
-    tilemap.register_tile("02_floorTopRight", 128, 0);
-    tilemap.register_tile("03_floorBottomLeft", 192, 0);
-    tilemap.register_tile("04_floorBottomRight", 256, 0);
-    tilemap.register_tile("05_floorTopLeft", 320, 0);
-    tilemap.register_tile("06_floorCentreLeft", 0, 64);
-    tilemap.register_tile("07_floorCentreTop", 64, 64);
-    tilemap.register_tile("08_floorCentreRight", 128, 64);
-    tilemap.register_tile("09_floorCentre", 192, 64);
-    tilemap.register_tile("10_floorCentreBottom", 256, 64);
-    tilemap.register_tile("11_roofPillar", 320, 64);
-    tilemap.register_tile("12_roofVertTop", 0, 128);
-    tilemap.register_tile("13_roofVertCentre", 64, 128);
-    tilemap.register_tile("14_wall", 128, 128);
-    tilemap.register_tile("15_roofHoriCentre", 192, 128);
-    tilemap.register_tile("16_roofHoriRight", 256, 128);
-    tilemap.register_tile("17_roofBottomRight", 320, 128);
-    tilemap.register_tile("18_roofHoriLeft", 0, 192);
-    tilemap.register_tile("19_roofTopLeft", 64, 192);
-    tilemap.register_tile("20_roofBottomLeft", 128, 192);
-    tilemap.register_tile("21_roofTopRight", 192, 192);
-    tilemap.register_tile("22_roofVertBottom", 256, 192);
-    tilemap.register_tile("23_vine", 320, 192);*/
-
     Tilemap sandMap;
 
     sandMap.load_tilemap_from_file("assets/sandMap.png", 56, 56, rend);
@@ -192,33 +163,6 @@ int game_loop(SDL_Renderer *rend)
     r.h = 50;
     r.x = 0;
     r.y = 60;
-    /*auto box = coordinator.create_entity();
-    coordinator.add_component(box, Transform{
-            .position = Vec2{120, 120},
-            .scale = Vec2{1, 1}
-            });
-    coordinator.add_component(box, Velocity{0, 0});
-    Collider col;
-    col.x = 0;
-    col.y = 0;
-    col.w = 100;
-    col.h = 100;
-    SDL_Rect col_from_rect = collider_to_rect(col);
-    coordinator.add_component(box, Renderable{
-            .rect = &col_from_rect,
-            .hasCollision = true,
-            .collision = &col_from_rect});
-    coordinator.add_component(box, col);
-
-    auto ghost_box = coordinator.create_entity();
-    coordinator.add_component(ghost_box, Transform{
-            .position = Vec2{250, 250},
-            .scale = Vec2{1, 1}
-            });
-    SDL_Rect ghost_rect = SDL_Rect{200, 200, 64, 64};
-    coordinator.add_component(ghost_box, Renderable{
-            .rect = &ghost_rect
-            });*/
     
     auto player = coordinator.create_entity();
     coordinator.add_component(player, Transform{
@@ -237,8 +181,15 @@ int game_loop(SDL_Renderer *rend)
     AnimatedSprite playerSprite;
     playerSprite.create_animation("01_Idle", &playerTexture, 14, 29, 55, 100);
     playerSprite.play_animation("01_Idle", true);
-    playerSprite.create_animation("02_Walking", &playerWalkingTexture, 48, 30, 60, 100, 8);
-    playerSprite.play_animation("02_Walking", true);
+    playerSprite.create_animation("02_Walking_S", &playerWalkingTexture, 6, 29, 60, 100, 0);
+    playerSprite.create_animation("02_Walking_SE", &playerWalkingTexture, 6, 29, 60, 100, 60);
+    playerSprite.create_animation("02_Walking_E", &playerWalkingTexture, 6, 29, 60, 100, 120);
+    playerSprite.create_animation("02_Walking_NE", &playerWalkingTexture, 6, 29, 60, 100, 180);
+    playerSprite.create_animation("02_Walking_N", &playerWalkingTexture, 6, 29, 60, 100, 240);
+    playerSprite.create_animation("02_Walking_NW", &playerWalkingTexture, 6, 29, 60, 100, 300);
+    playerSprite.create_animation("02_Walking_W", &playerWalkingTexture, 6, 29, 60, 100, 360);
+    playerSprite.create_animation("02_Walking_SW", &playerWalkingTexture, 6, 29, 60, 100, 420);
+    //playerSprite.play_animation("02_Walking", true);
 
     coordinator.add_component(player, playerSprite);
     r.w = 52;
@@ -328,5 +279,6 @@ Level construct_sample_level(Tilemap* tmap)
     l.add_tile(168 * 2, 280 * 2, 1, tmap, "02_roofHori");
     l.add_tile(224 * 2, 280 * 2, 1, tmap, "10_roofCornerRightB");
 
+    l.load_level_from_file("levels/1.lvl");
     return l;
 }
