@@ -65,6 +65,14 @@ SDL_Rect Tilemap::get_tile_clip(std::string tileName)
     return r;
 }
 
+uint8_t Tilemap::find_key(std::string key)
+{
+    if (tileClips.find(key) == tileClips.end())
+        return 0;
+    else
+        return 1;
+}
+
 Texture* Tilemap::get_texture()
 {
     return &mapTex;

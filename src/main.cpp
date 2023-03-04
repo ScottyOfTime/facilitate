@@ -164,6 +164,7 @@ int game_loop(SDL_Renderer *rend)
     r.x = 0;
     r.y = 60;
     
+    /* PLAYER ENTITY CREATION */
     auto player = coordinator.create_entity();
     coordinator.add_component(player, Transform{
             .position = Vec2{160, 160},
@@ -179,7 +180,7 @@ int game_loop(SDL_Renderer *rend)
     uint8_t res = playerTexture.load_from_file("assets/dis.png", rend);
     uint8_t resW = playerWalkingTexture.load_from_file("assets/character_walking.png", rend);
     AnimatedSprite playerSprite;
-    playerSprite.create_animation("01_Idle", &playerTexture, 14, 29, 55, 100);
+    playerSprite.create_animation("01_Idle", &playerTexture, 14, 29, 60, 100);
     playerSprite.play_animation("01_Idle", true);
     playerSprite.create_animation("02_Walking_S", &playerWalkingTexture, 6, 29, 60, 100, 0);
     playerSprite.create_animation("02_Walking_SE", &playerWalkingTexture, 6, 29, 60, 100, 60);
@@ -195,7 +196,7 @@ int game_loop(SDL_Renderer *rend)
     r.w = 52;
     r.h = 30;
     r.x = 0;
-    r.y = 80;
+    r.y = 82;
     Collider coll = rect_to_collider(r);
     coordinator.add_component(player, Renderable{
             .tex = &playerTexture,
@@ -243,7 +244,8 @@ int game_loop(SDL_Renderer *rend)
 Level construct_sample_level(Tilemap* tmap)
 {
     Level l;
-    l.add_tile(0, 0, 1, tmap, "05_roofCornerLeftT");
+    /* Test level (square room)*/
+    /*l.add_tile(0, 0, 1, tmap, "05_roofCornerLeftT");
     l.add_tile(56 * 2, 0, 1, tmap, "02_roofHori");
     l.add_tile(112 * 2, 1, 1, tmap, "02_roofHori");
     l.add_tile(168 * 2, 1, 1, tmap, "02_roofHori");
@@ -277,8 +279,8 @@ Level construct_sample_level(Tilemap* tmap)
     l.add_tile(56 * 2, 280 * 2, 1, tmap, "02_roofHori");
     l.add_tile(112 * 2, 280 * 2, 1, tmap, "02_roofHori");
     l.add_tile(168 * 2, 280 * 2, 1, tmap, "02_roofHori");
-    l.add_tile(224 * 2, 280 * 2, 1, tmap, "10_roofCornerRightB");
+    l.add_tile(224 * 2, 280 * 2, 1, tmap, "10_roofCornerRightB");*/
 
-    l.load_level_from_file("levels/1.lvl");
+    l.load_level_from_file("levels/1.lvl", tmap);
     return l;
 }

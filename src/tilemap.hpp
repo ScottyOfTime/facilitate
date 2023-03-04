@@ -44,6 +44,7 @@ public:
             SDL_Renderer *rend);
     void register_tile(std::string tileName, int x, int y);
     SDL_Rect get_tile_clip(std::string tileName);
+    uint8_t find_key(std::string key);
 
     Texture* get_texture();
 

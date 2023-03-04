@@ -4,19 +4,39 @@
 #include <fstream>
 #include <iostream>
 
-void Level::load_level_from_file(const char* path)
+void Level::load_level_from_file(const char* path, Tilemap* tmap)
 {
     std::fstream levelFile{path};
     std::string line;
-    int x, y = 0;
+    std::string delimiter = ",";
+    int x = 0, y = 0;
     while (std::getline(levelFile, line)) {
-        std::cout << line << std::endl; 
+        size_t pos = 0;
+        std::string token;
+        x = 0;
+        while ((pos = line.find(delimiter)) != std::string::npos) {
+            std::cout << line << std::endl;
+            token = line.substr(0, pos);
+            std::cout << token << std::endl;
+            if (token.compare("13_floor")) {
+                printf("floor\n");
+                this->add_tile(x, y, 1, tmap, token);
+            } else {
+                this->add_tile(x, y, 0, tmap, token);
+            }
+            x += 56 * 2;
+            line.erase(0, pos + delimiter.length());
+        }
+        y += 56 * 2;
     }
+    levelFile.close();
 }
 
 void Level::add_tile(int x, int y, int tileType, Tilemap* tilemap, std::string tileName)
 {
-    levelData.push_back(Tile(x, y, tileType, tilemap, tileName));
+    if (tilemap->find_key(tileName)) {
+        levelData.push_back(Tile(x, y, tileType, tilemap, tileName));
+    }
 }
 
 void Level::render_level(SDL_Renderer* rend, SDL_Rect* camera)
