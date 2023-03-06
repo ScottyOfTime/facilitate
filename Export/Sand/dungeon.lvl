@@ -1,0 +1,7 @@
+roofCornerLeftT,roofHori,roofHori,roofHori,roofHori,roofCornerRightT,
+roofVert,wall,wall,wall,wall,roofVert,
+roofVert,floor,floor,floor,floor,roofVert,
+roofVert,floor,floor,floor,floor,roofVert,
+roofVert,floor,floor,floor,floor,roofVert,
+roofCornerLeftB,roofHori,roofHori,roofHori,roofHori,roofCornerRightB,
+wall,wall,wall,wall,wall,wall,
