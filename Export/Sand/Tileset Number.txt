@@ -1,0 +1,18 @@
+Blank
+roofHori
+roofHoriLeft
+roofHoriRight
+roofCornerLeftTop
+roofCornerRightTop
+roofVert
+roofVertBottom
+roofCornerLeftB
+roofCornerRightB
+roofVertTop
+roofPillar
+floor
+dungeonWall
+top RoofT
+leftRoofT
+bottomRoofT
+rightRoofT
