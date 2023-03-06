@@ -15,7 +15,7 @@ roofVert,floor,roofCornerLeftT,roofVert,roofCornerLeftB,wall,roofVert,floor,floo
 roofVert,floor,roofVert,wall,wall,floor,leftRoofT,roofHori,roofHori,roofHori,roofHori,roofHori,roofCornerRightB,floor,leftRoofT,roofHori,roofCornerRightB,floor,roofVert,floor,roofVert,
 roofVert,floor,roofVertBottom,floor,floor,floor,roofVertBottom,wall,wall,wall,wall,wall,wall,floor,roofVert,wall,wall,floor,roofVert,floor,roofVert,
 roofVert,floor,wall,floor,roofVertTop,floor,wall,floor,floor,floor,floor,floor,floor,floor,roofVert,floor,floor,floor,roofVert,floor,roofVert,
-roofVert,floor,floor,floor,roofVert,floor,floor,floor,roofCornerLeftT,roofHori,roofCornerRightT,floor,roofHoriLeft,roofHori,rightRoofT,floor,roofCornerLeftT,floor,roofVert,
+roofVert,floor,floor,floor,roofVert,floor,floor,floor,roofCornerLeftT,roofHori,roofCornerRightT,floor,roofHoriLeft,roofHori,rightRoofT,floor,roofCornerLeftT,roofHori,roofcornerRightB,floor,roofVert
 leftRoofT,roofHori,roofHori,roofHori,bottomRoofT,roofHori,roofHoriRight,floor,roofVert,dungeonWall,roofVert,floor,wall,wall,roofVertBottom,floor,roofVert,wall,wall,floor,roofVert,
 roofVert,wall,wall,wall,wall,wall,wall,floor,roofVert,paperFloor,roofVert,floor,floor,floor,wall,floor,roofVert,floor,floor,floor,roofVert,
 roofVert,floor,floor,floor,floor,floor,floor,floor,roofVert,floor,roofVert,floor,roofVertTop,floor,floor,floor,roofVert,floor,floor,floor,roofVert,
