@@ -4,7 +4,7 @@ roofVert,floor,roofVert,floor,floor,floor,roofVert,floor,roofVert,floor,floor,fl
 roofVert,floor,roofVertBottom,floor,roofVertTop,floor,roofVertBottom,floor,roofVert,floor,roofVertTop,floor,roofCornerLeftT,roofHori,roofHori,roofHori,roofCornerRightT,floor,roofHoriLeft,roofHori,rightRoofT,
 roofVert,floor,wall,floor,roofVert,floor,wall,floor,roofVert,floor,roofVert,floor,roofVert,wall,wall,wall,roofVert,floor,wall,wall,roofVert,
 roofVert,floor,floor,floor,roofVert,floor,floor,floor,roofVert,floor,roofVert,floor,roofVert,floor,floor,floor,roofVert,floor,floor,floor,roofVert,
-leftRoofT,roofHori,roofHoriRight,floor,leftRoofT,roofHori,roofHori,roofHori,roofCornerRightB,floor,roofVert,floor,roofVert,floor,roofVert,floor,roofVertTop,floor,leftRoofT,roofHori,roofHoriRight,floor,roofVert,
+leftRoofT,roofHori,roofHoriRight,floor,leftRoofT,roofHori,roofHori,roofHori,roofCornerRightB,floor,roofVert,floor,roofVert,floor,roofVertTop,floor,leftRoofT,roofHori,roofHoriRight,floor,roofVert,
 roofVert,wall,wall,floor,roofVert,wall,wall,wall,wall,floor,roofVert,floor,roofVert,floor,roofVert,floor,roofVert,wall,wall,floor,roofVert,
 roofVert,floor,floor,floor,roofVert,floor,floor,floor,floor,floor,roofCornerLeftB,roofHori,rightRoofT,floor,roofVetr,floor,roofVert,floor,floor,floor,roofVert,
 roofVert,floor,roofCornerLeftT,roofHori,bottomRoofT,roofVert,roofVert,roofVert,roofCornerRightT,floor,wall,wall,roofVert,floor,roofVert,floor,leftRoofT,roofHori,roofHori,roofHori,rightRoofT,
