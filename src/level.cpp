@@ -15,11 +15,8 @@ void Level::load_level_from_file(const char* path, Tilemap* tmap)
         std::string token;
         x = 0;
         while ((pos = line.find(delimiter)) != std::string::npos) {
-            std::cout << line << std::endl;
             token = line.substr(0, pos);
-            std::cout << token << std::endl;
-            if (token.compare("13_floor")) {
-                printf("floor\n");
+            if (token.compare("floor")) {
                 this->add_tile(x, y, 1, tmap, token);
             } else {
                 this->add_tile(x, y, 0, tmap, token);

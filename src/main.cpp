@@ -182,7 +182,7 @@ int game_loop(SDL_Renderer *rend)
     r.y = 60;
     Texture playerTexture;
     Texture playerWalkingTexture;
-    uint8_t res = playerTexture.load_from_file("assets/dis.png", rend);
+    uint8_t res = playerTexture.load_from_file("assets/character_idle.png", rend);
     uint8_t resW = playerWalkingTexture.load_from_file("assets/character_walking.png", rend);
     AnimatedSprite playerSprite;
     playerSprite.create_animation("01_Idle", &playerTexture, 14, 29, 60, 100);
@@ -249,42 +249,6 @@ int game_loop(SDL_Renderer *rend)
 Level construct_sample_level(Tilemap* tmap)
 {
     Level l;
-    /* Test level (square room)*/
-    /*l.add_tile(0, 0, 1, tmap, "05_roofCornerLeftT");
-    l.add_tile(56 * 2, 0, 1, tmap, "02_roofHori");
-    l.add_tile(112 * 2, 1, 1, tmap, "02_roofHori");
-    l.add_tile(168 * 2, 1, 1, tmap, "02_roofHori");
-    l.add_tile(224 * 2, 0, 1, tmap, "06_roofCornerRightT");
-
-    l.add_tile(0, 56 * 2, 1, tmap, "07_roofVert");
-    l.add_tile(56 * 2, 56 * 2, 1, tmap, "01_wall");
-    l.add_tile(112 * 2, 56 * 2, 1, tmap, "01_wall");
-    l.add_tile(168 * 2, 56 * 2, 1, tmap, "01_wall");
-    l.add_tile(224 * 2, 56 * 2, 1, tmap, "07_roofVert");
-
-    l.add_tile(0, 112 * 2, 1, tmap, "07_roofVert");
-    l.add_tile(56 * 2, 112 * 2, 0, tmap, "13_floor");
-    l.add_tile(112 * 2, 112 * 2, 0, tmap, "13_floor");
-    l.add_tile(168 * 2, 112 * 2, 0, tmap, "13_floor");
-    l.add_tile(224 * 2, 112 * 2, 1, tmap, "07_roofVert");
-
-    l.add_tile(0, 168 * 2, 1, tmap, "07_roofVert");
-    l.add_tile(56 * 2, 168 * 2, 0, tmap, "13_floor");
-    l.add_tile(112 * 2, 168 * 2, 0, tmap, "13_floor");
-    l.add_tile(168 * 2, 168 * 2, 0, tmap, "13_floor");
-    l.add_tile(224 * 2, 168 * 2, 1, tmap, "07_roofVert");
-
-    l.add_tile(0, 224 * 2, 1, tmap, "07_roofVert");
-    l.add_tile(56 * 2, 224 * 2, 0, tmap, "13_floor");
-    l.add_tile(112 * 2, 224 * 2, 0, tmap, "13_floor");
-    l.add_tile(168 * 2, 224 * 2, 0, tmap, "13_floor");
-    l.add_tile(224 * 2, 224 * 2, 1, tmap, "07_roofVert");
-
-    l.add_tile(0, 280 * 2, 1, tmap, "09_roofCornerLeftB");
-    l.add_tile(56 * 2, 280 * 2, 1, tmap, "02_roofHori");
-    l.add_tile(112 * 2, 280 * 2, 1, tmap, "02_roofHori");
-    l.add_tile(168 * 2, 280 * 2, 1, tmap, "02_roofHori");
-    l.add_tile(224 * 2, 280 * 2, 1, tmap, "10_roofCornerRightB");*/
 
     l.load_level_from_file("levels/1.lvl", tmap);
     return l;
