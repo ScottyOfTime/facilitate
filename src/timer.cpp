@@ -57,6 +57,7 @@ uint32_t Timer::timer_get_ticks()
             return SDL_GetTicks() - startTicks;
         }
     }
+	return 0;
 }
 
 bool Timer::is_started()
