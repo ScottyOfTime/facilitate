@@ -6,7 +6,7 @@
 
 | July                                                                        | August                                                              | September    | October | November | December      |
 |-----------------------------------------------------------------------------|---------------------------------------------------------------------|--------------|---------|----------|---------------|
-| - Every dungeon planned - One level track complete - Level files - Start AI | - All dungeon level files - AI complete - Two level tracks complete | - Checkpoint | -TBD    | -TBD     | - 1.0 Release |
+| Every dungeon planned : One level track complete : Level files : Start AI | All dungeon level files : AI complete : Two level tracks complete | Checkpoint | TBD    | TBD     | 1.0 Release |
 
 ### Todo
 
